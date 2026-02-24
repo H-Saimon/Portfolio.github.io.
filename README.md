@@ -1,248 +1,198 @@
-# Portfólio - Hítalon Saimon
-
-Portfólio profissional moderno desenvolvido com **React 19**, **Tailwind CSS 4** e **TypeScript**, apresentando minha experiência em Engenharia de Software, projetos técnicos e habilidades em desenvolvimento full-stack.
-
-## 🎯 Sobre o Projeto
-
-Este portfólio foi desenvolvido como uma vitrine profissional completa, apresentando:
-
-- **Seção Hero**: Apresentação inicial com chamada para ação
-- **Sobre Mim**: Trajetória profissional e experiência
-- **Hard Skills**: Tecnologias e ferramentas que domino
-- **Projetos em Destaque**: Seleção de projetos técnicos com descrições detalhadas
-- **Contato**: Múltiplos canais de comunicação (GitHub, LinkedIn, Email)
-- **Navegação Suave**: Scroll animado entre seções
-
-## 🛠️ Stack Tecnológico
-
-### Frontend
-- **React 19.2.1** - Framework UI moderno
-- **TypeScript 5.6.3** - Tipagem estática
-- **Tailwind CSS 4.1.14** - Utility-first CSS framework
-- **Vite 7.1.7** - Build tool rápido
-- **Wouter 3.3.5** - Roteamento leve
-- **Lucide React** - Ícones SVG
-
-### UI Components
-- **shadcn/ui** - Componentes React acessíveis
-- **Radix UI** - Primitivos de UI sem estilo
-- **Framer Motion** - Animações fluidas
-- **Sonner** - Toasts e notificações
-
-### Desenvolvimento
-- **Prettier** - Formatação de código
-- **ESBuild** - Bundling otimizado
-- **pnpm** - Gerenciador de pacotes rápido
-
-## 📋 Estrutura do Projeto
-
-```
-hitalon-portfolio/
-├── client/
-│   ├── public/              # Arquivos estáticos
-│   ├── src/
-│   │   ├── components/      # Componentes reutilizáveis
-│   │   │   └── ui/         # Componentes shadcn/ui
-│   │   ├── pages/          # Páginas principais
-│   │   │   └── Home.tsx    # Página principal do portfólio
-│   │   ├── contexts/       # Contextos React
-│   │   ├── hooks/          # Custom hooks
-│   │   ├── lib/            # Utilitários
-│   │   ├── App.tsx         # Componente raiz
-│   │   ├── main.tsx        # Ponto de entrada
-│   │   └── index.css       # Estilos globais e temas
-│   └── index.html          # HTML principal
-├── server/                  # Placeholder para compatibilidade
-├── shared/                  # Placeholder para compatibilidade
-├── package.json            # Dependências e scripts
-├── tsconfig.json           # Configuração TypeScript
-├── tailwind.config.js      # Configuração Tailwind
-├── vite.config.ts          # Configuração Vite
-└── README.md              # Este arquivo
-```
-
-## 🚀 Como Executar
-
-### Pré-requisitos
-- Node.js 18+ 
-- pnpm 10+
-
-### Instalação
-
-```bash
-# Clonar repositório
-git clone https://github.com/seu-usuario/hitalon-portfolio.git
-cd hitalon-portfolio
-
-# Instalar dependências
-pnpm install
-```
-
-### Desenvolvimento
-
-```bash
-# Iniciar servidor de desenvolvimento
-pnpm dev
-
-# Acesso em http://localhost:3000
-```
-
-### Build para Produção
-
-```bash
-# Gerar build otimizado
-pnpm build
-
-# Visualizar build localmente
-pnpm preview
-```
-
-### Verificação de Tipos
-
-```bash
-# Verificar erros TypeScript
-pnpm check
-
-# Formatar código
-pnpm format
-```
-
-## 📱 Seções do Portfólio
-
-### Hero Section
-- Apresentação principal com nome e profissão
-- Descrição resumida da trajetória
-- Botões de ação (Ver Projetos, GitHub, LinkedIn, Currículo)
-- Animação de scroll suave
-
-### Sobre Mim
-- Descrição detalhada da experiência profissional
-- Formação acadêmica (Engenharia de Software - UniAmérica)
-- Experiência profissional (Tel Telemática, SENAI)
-- Diferenciais profissionais (Empatia com usuário, Comunicação técnica)
-
-### Hard Skills
-Tecnologias organizadas por categoria:
-
-**Linguagens**: Java, Python, C#, PHP, JavaScript
-
-**Web**: HTML5, CSS3, React, Angular, Tailwind CSS
-
-**Dados**: MySQL, PostgreSQL, SQL Server, Power BI
-
-**Ferramentas & Infra**: Git, GitHub, Arduino, ESP32, Nuvem, Protocolos IoT
-
-### Projetos em Destaque
-
-1. **Sistema de Gerenciamento IoT**
-   - Plataforma completa para monitoramento de dispositivos IoT
-   - Tech: Arduino, ESP32, Python, MySQL, REST API
-
-2. **Dashboard de Análise de Dados**
-   - Dashboard interativo com integração Power BI
-   - Tech: React, Power BI, PostgreSQL, Tailwind CSS
-
-3. **API RESTful de Gestão de Usuários**
-   - Backend robusto com Spring Boot
-   - Tech: Java, Spring Boot, PostgreSQL, JWT, Docker
-
-4. **Aplicação Web de E-commerce**
-   - Plataforma full-stack com Angular e C#
-   - Tech: Angular, C#, .NET, SQL Server, Stripe
-
-### Contato
-Múltiplos canais de comunicação:
-- GitHub - Projetos e contribuições open source
-- LinkedIn - Trajetória profissional
-- Email - Contato direto
-
-## 🎨 Design
-
-### Paleta de Cores
-- **Fundo**: Gradiente Slate (950 → 900 → 950)
-- **Destaque**: Cyan (#06B6D4)
-- **Texto Principal**: White (#FFFFFF)
-- **Texto Secundário**: Slate 300-400
-- **Bordas**: Slate 700-800
-
-### Tipografia
-- **Títulos**: Font-weight 700 (bold)
-- **Corpo**: Font-weight 400-500
-- **Monospace**: Utilizado em labels técnicos
-
-### Componentes Visuais
-- Cards com bordas sutis e hover effects
-- Ícones Lucide React
-- Animações suaves com Framer Motion
-- Gradientes e overlays para profundidade
-- Efeitos de blur backdrop para navegação
-
-## ✨ Funcionalidades
-
-- ✅ Navegação suave entre seções
-- ✅ Design responsivo (mobile, tablet, desktop)
-- ✅ Tema dark moderno
-- ✅ Animações fluidas
-- ✅ Componentes acessíveis
-- ✅ Performance otimizada
-- ✅ SEO-friendly
-- ✅ TypeScript para segurança de tipos
-
-## 📦 Dependências Principais
-
-```json
-{
-  "react": "^19.2.1",
-  "react-dom": "^19.2.1",
-  "tailwindcss": "^4.1.14",
-  "lucide-react": "^0.453.0",
-  "framer-motion": "^12.23.22",
-  "wouter": "^3.3.5",
-  "sonner": "^2.0.7"
-}
-```
-
-## 🔧 Configuração
-
-### Tailwind CSS
-Configuração customizada em `tailwind.config.js`:
-- Temas dark/light
-- Cores personalizadas
-- Espaçamento customizado
-- Animações adicionais
-
-### TypeScript
-Configuração em `tsconfig.json`:
-- Target: ES2020
-- Module: ESNext
-- Strict mode ativado
-- Paths aliases configurados
-
-## 📈 Performance
-
-- Build otimizado com Vite
-- Lazy loading de componentes
-- CSS purging automático
-- Minificação de assets
-- Caching estratégico
-
-## 🤝 Contribuindo
-
-Este é um projeto pessoal, mas sugestões e feedback são bem-vindos!
-
-## 📄 Licença
-
-MIT License - Veja o arquivo LICENSE para detalhes.
-
-## 👨‍💻 Autor
-
-**Hítalon Saimon**
-- GitHub: [@H-Saimon](https://github.com/H-Saimon)
-- LinkedIn: [Seu Perfil](https://linkedin.com/in/seu-perfil)
-- Email: seu.email@exemplo.com
+# Portfolio.github.io ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![Issues](https://img.shields.io/github/issues/HitalonSaimon/Portfolio.github.io) ![License](https://img.shields.io/github/license/HitalonSaimon/Portfolio.github.io) ![Language](https://img.shields.io/github/languages/top/HitalonSaimon/Portfolio.github.io) ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
 ---
 
-**Desenvolvido exclusivamente por Hítalon Saimon** com ❤️ usando React & Tailwind CSS
+## Descrição do Projeto
 
-© 2024 Hítalon Saimon. Todos os direitos reservados.
+**Portfolio.github.io** é um portfólio profissional moderno desenvolvido para o engenheiro de software Hítalon Saimon. Construído com tecnologias atuais como React 19, Tailwind CSS 4 e TypeScript, o projeto tem como objetivo principal apresentar a trajetória, habilidades técnicas, projetos desenvolvidos e contatos profissionais do autor de maneira interativa, elegante e de fácil navegação.
+
+Este portfólio funciona como uma vitrine digital pensada para recrutadores, clientes e colegas de profissão que buscam conhecer o perfil técnico e experiência do desenvolvedor. Seu diferencial está na combinação de um design responsivo, navegação suave e performance otimizada, utilizando arquiteturas modernas baseadas em componentes reativos e rotas leves.
+
+O projeto é estruturado em um monorepo que une um frontend SPA React com roteamento através da biblioteca Wouter e um backend minimalista em Node.js com TypeScript para servir conteúdos e endpoints necessários.
+
+---
+
+## Funcionalidades
+
+- **Seção Hero**: Apresentação inicial do profissional com chamada para ação clara.
+- **Sobre Mim**: Detalha a trajetória, formação e experiência em engenharia de software.
+- **Hard Skills**: Lista de tecnologias e ferramentas dominadas.
+- **Projetos em Destaque**: Demonstração visual e descritiva de projetos técnicos selecionados.
+- **Contato**: Integração com múltiplos canais (GitHub, LinkedIn, email) para fácil comunicação.
+- **Navegação Suave**: Scroll animado e otimizado entre as seções do portfólio para melhor experiência do usuário.
+- **Arquitetura Modular**: Separação clara entre cliente (frontend React), servidor (backend Node.js/TypeScript) e código compartilhado, facilitando manutenção e escalabilidade.
+- **Patch de Dependência**: Correção personalizada aplicada ao pacote `wouter` para garantir compatibilidade e estabilidade.
+- **Configuração moderna de Build**: Utilização do Vite para desenvolvimento rápido e geração de build otimizada.
+- **Tipagem Estática Completa**: Uso extensivo de TypeScript para maior segurança de código e manutenção facilitada.
+- **Estilização Efetiva**: Uso do Tailwind CSS para criar um layout responsivo e customizável com métricas consistentes.
+
+---
+
+## Tecnologias Utilizadas
+
+| Categoria         | Tecnologia / Ferramenta        | Versão utilizada    |
+|-------------------|-------------------------------|---------------------|
+| Linguagem         | TypeScript                    | 5.6.3               |
+| Frontend          | React                        | 19.2.1              |
+| Estilização       | Tailwind CSS                 | 4.1.14              |
+| Build Tool        | Vite                         | 7.1.7               |
+| Roteamento        | Wouter                       | 3.3.5 (patch custom)|
+| Backend           | Node.js + TypeScript         | -                   |
+| Gerenciador de Pacotes | pnpm                   | -                   |
+| Patch de Dependência| wouter@3.7.1.patch           | -                   |
+
+---
+
+## Estrutura de Diretórios
+
+```plaintext
+Portfolio.github.io/
+├── client/                  # Código-fonte do frontend em React
+│   ├── index.html           # Arquivo HTML principal da aplicação React
+│   ├── public/              # Recursos públicos estáticos (imagens, favicon, etc)
+│   └── src/                 # Código-fonte React com componentes, estilos e lógica UI
+├── server/                  # Backend Node.js em TypeScript para APIs e server-side
+│   └── index.ts             # Ponto de entrada do servidor
+├── shared/                  # Código e constantes compartilhadas entre frontend e backend
+│   └── const.ts             # Constantes comuns para todo o projeto
+├── patches/                 # Patches customizados para dependências node_modules
+│   └── wouter@3.7.1.patch  # Correção aplicada à biblioteca Wouter versão 3.7.1
+├── package.json             # Configurações e dependências do projeto
+├── pnpm-lock.yaml           # Lockfile para controle de versões do pnpm
+├── tsconfig.json            # Configuração principal do TypeScript para o projeto
+├── tsconfig.node.json       # Configuração TypeScript específica para o backend Node.js
+├── vite.config.ts           # Configuração do Vite para build e dev server
+├── LICENSE                  # Arquivo de licença do projeto
+├── CONTRIBUTING.md          # Guia de contribuição para desenvolvedores
+├── SETUP.md                 # Guia para instalação e configuração do ambiente local
+├── DIRECTORY_STRUCTURE.md   # Detalhamento da estrutura do projeto
+└── README.md                # Documentação principal do projeto (este arquivo)
+```
+
+---
+
+## Instalação e Execução
+
+### Pré-requisitos
+
+- Node.js (preferencialmente versões LTS, >=18.x)
+- pnpm (gerenciador de pacotes) instalado globalmente
+- Navegador moderno para visualização do frontend (Chrome, Firefox, Edge, Safari)
+
+### Passos para rodar localmente
+
+1. Clone este repositório:
+
+   ```bash
+   git clone https://github.com/HitalonSaimon/Portfolio.github.io.git
+   cd Portfolio.github.io
+   ```
+
+2. Instale as dependências com pnpm:
+
+   ```bash
+   pnpm install
+   ```
+
+3. Aplique o patch na dependência Wouter (se não for aplicado automaticamente via patch-package):
+
+   ```bash
+   # Instruções específicas estão no README relacionado ao patch ou script no package.json
+   ```
+
+4. Execute o servidor backend:
+
+   ```bash
+   pnpm run dev:server
+   ```
+
+5. Em outro terminal, execute o frontend:
+
+   ```bash
+   pnpm run dev:client
+   ```
+
+6. Acesse a aplicação em [http://localhost:3000](http://localhost:3000) ou conforme configurado no `vite.config.ts`.
+
+---
+
+## Endpoints da API
+
+| Método | Endpoint         | Descrição                              |
+|--------|------------------|--------------------------------------|
+| GET    | `/api/projects`  | Retorna a lista de projetos em destaque |
+| GET    | `/api/contact`   | Retorna informações para contato     |
+
+> **Observação:** Esta estrutura de endpoints é prevista conforme organização do backend `server/index.ts`. Podem existir outras rotas internas conforme evolução do código.
+
+---
+
+## Testes
+
+- Atualmente, o projeto não possui testes automatizados implementados.
+- Futuras versões devem incluir testes unitários e de integração, utilizando frameworks como Jest e React Testing Library para frontend e backend.
+- Estratégia sugerida: cobertura modular para frontend (componentes React) e backend (endpoints e funções de negócio).
+
+---
+
+## Deploy
+
+- O deploy pode ser realizado em qualquer plataforma de hospedagem estática para o frontend (Netlify, Vercel, GitHub Pages).
+- O backend Node.js pode ser hospedado em serviços de nuvem com suporte a Node.js (AWS Elastic Beanstalk, Heroku, DigitalOcean).
+- Recomenda-se containerização via Docker para facilitar deploys consistentes e escaláveis.
+- Pipeline CI/CD pode ser configurado utilizando GitHub Actions ou outra plataforma para automação de build e deploy.
+
+---
+
+## Segurança
+
+- Atualmente, a aplicação não possui autenticação ou autorização, pois é um portfólio público.
+- Validações básicas são implementadas para evitar entradas inválidas em formulários de contato.
+- O patch aplicado ao `wouter` garante estabilidade e evita vulnerabilidades relacionadas à navegação.
+- Em versões futuras, recomenda-se:
+  - Adicionar token anti-CSRF para endpoints /formulários.
+  - Escapar e sanitizar inputs para mitigar ataques XSS.
+  - Utilizar HTTPS no ambiente de produção.
+
+---
+
+## Melhorias Futuras
+
+- Implementar testes automatizados para frontend e backend.
+- Adicionar suporte a múltiplos idiomas (i18n).
+- Incluir feedback visual e validação ampliada para formulário de contato.
+- Migrar backend para arquitetura serverless para redução de custo e escala.
+- Implementar analytics para medir engajamento do portfólio.
+- Atualizar e centralizar configuração de tema escuro/claro.
+- Automatizar deploy com CI/CD integrado.
+- Expandir seções do portfólio com blogs técnicos e certificações.
+
+---
+
+## Contribuição
+
+Contribuições são muito bem-vindas! Para contribuir, siga os passos abaixo:
+
+1. Leia o arquivo [`CONTRIBUTING.md`](./CONTRIBUTING.md) para entender as diretrizes do projeto.
+2. Faça um fork do repositório.
+3. Crie uma branch com a sua feature ou correção:
+   ```bash
+   git checkout -b minha-feature
+   ```
+4. Realize suas alterações com commits claros e concisos.
+5. Execute testes manuais e verifique a build localmente.
+6. Faça push da branch para seu fork e abra um pull request neste repositório.
+7. Aguarde revisão e feedback da equipe.
+
+Por favor, mantenha o padrão do código, documentação atualizada e siga as boas práticas de desenvolvimento.
+
+---
+
+## Licença
+
+Este projeto está licenciado sob a licença **MIT**. Consulte o arquivo [LICENSE](./LICENSE) para mais detalhes.
+
+---
+
+> Desenvolvido por **Hítalon Saimon** | Engenharia de Software & Desenvolvimento Full-Stack  
+> [GitHub](https://github.com/HitalonSaimon) | [LinkedIn](https://www.linkedin.com/in/hitalonsaimon)

@@ -1,198 +1,196 @@
-# Portfolio.github.io ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![Issues](https://img.shields.io/github/issues/HitalonSaimon/Portfolio.github.io) ![License](https://img.shields.io/github/license/HitalonSaimon/Portfolio.github.io) ![Language](https://img.shields.io/github/languages/top/HitalonSaimon/Portfolio.github.io) ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+# Portfolio.github.io
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6.3-blue?logo=typescript&style=flat-square)](https://www.typescriptlang.org/) 
+[![Issues](https://img.shields.io/github/issues/H-Saimon/Portfolio.github.io?style=flat-square)](https://github.com/H-Saimon/Portfolio.github.io/issues) 
+[![License](https://img.shields.io/github/license/H-Saimon/Portfolio.github.io?style=flat-square)](./LICENSE) 
+[![Último Commit](https://img.shields.io/github/last-commit/H-Saimon/Portfolio.github.io?style=flat-square)](https://github.com/H-Saimon/Portfolio.github.io/commits/main) 
+[![Status](https://img.shields.io/badge/status-estável-brightgreen?style=flat-square)](#)
 
 ---
 
-## Descrição do Projeto
+# Portfólio - Hítalon Saimon
 
-**Portfolio.github.io** é um portfólio profissional moderno desenvolvido para o engenheiro de software Hítalon Saimon. Construído com tecnologias atuais como React 19, Tailwind CSS 4 e TypeScript, o projeto tem como objetivo principal apresentar a trajetória, habilidades técnicas, projetos desenvolvidos e contatos profissionais do autor de maneira interativa, elegante e de fácil navegação.
+## 1. Descrição
 
-Este portfólio funciona como uma vitrine digital pensada para recrutadores, clientes e colegas de profissão que buscam conhecer o perfil técnico e experiência do desenvolvedor. Seu diferencial está na combinação de um design responsivo, navegação suave e performance otimizada, utilizando arquiteturas modernas baseadas em componentes reativos e rotas leves.
+Este repositório contém o código-fonte de um portfólio profissional moderno desenvolvido para apresentar a trajetória, experiências, habilidades e projetos técnicos de Hítalon Saimon Santos Silva. Construído com foco em engenharia de software e desenvolvimento full-stack, o portfólio combina tecnologias de ponta para garantir alta performance, responsividade e boa experiência do usuário.
 
-O projeto é estruturado em um monorepo que une um frontend SPA React com roteamento através da biblioteca Wouter e um backend minimalista em Node.js com TypeScript para servir conteúdos e endpoints necessários.
+O objetivo principal é servir como uma vitrine digital para profissionais de tecnologia que desejam expor seus conhecimentos e trabalhos, facilitando o contato com recrutadores ou parceiros. O projeto resolve o problema de apresentar informações técnicas e pessoais de forma concisa e atrativa, trazendo navegação fluida e design minimalista.
 
----
-
-## Funcionalidades
-
-- **Seção Hero**: Apresentação inicial do profissional com chamada para ação clara.
-- **Sobre Mim**: Detalha a trajetória, formação e experiência em engenharia de software.
-- **Hard Skills**: Lista de tecnologias e ferramentas dominadas.
-- **Projetos em Destaque**: Demonstração visual e descritiva de projetos técnicos selecionados.
-- **Contato**: Integração com múltiplos canais (GitHub, LinkedIn, email) para fácil comunicação.
-- **Navegação Suave**: Scroll animado e otimizado entre as seções do portfólio para melhor experiência do usuário.
-- **Arquitetura Modular**: Separação clara entre cliente (frontend React), servidor (backend Node.js/TypeScript) e código compartilhado, facilitando manutenção e escalabilidade.
-- **Patch de Dependência**: Correção personalizada aplicada ao pacote `wouter` para garantir compatibilidade e estabilidade.
-- **Configuração moderna de Build**: Utilização do Vite para desenvolvimento rápido e geração de build otimizada.
-- **Tipagem Estática Completa**: Uso extensivo de TypeScript para maior segurança de código e manutenção facilitada.
-- **Estilização Efetiva**: Uso do Tailwind CSS para criar um layout responsivo e customizável com métricas consistentes.
+Diferenciais técnicos:
+- Arquitetura moderna com React 19 e TypeScript para segurança e escalabilidade
+- Uso do Tailwind CSS 4 para estilização ágil e responsiva
+- Roteamento leve via Wouter
+- Uso do Vite como builder para otimização do desenvolvimento e build final
+- Back-end Node.js com TypeScript para suporte via API integrada
+- Estrutura modular com separação explícita entre client, server e código compartilhado
 
 ---
 
-## Tecnologias Utilizadas
+## 2. Funcionalidades
 
-| Categoria         | Tecnologia / Ferramenta        | Versão utilizada    |
-|-------------------|-------------------------------|---------------------|
-| Linguagem         | TypeScript                    | 5.6.3               |
-| Frontend          | React                        | 19.2.1              |
-| Estilização       | Tailwind CSS                 | 4.1.14              |
-| Build Tool        | Vite                         | 7.1.7               |
-| Roteamento        | Wouter                       | 3.3.5 (patch custom)|
-| Backend           | Node.js + TypeScript         | -                   |
-| Gerenciador de Pacotes | pnpm                   | -                   |
-| Patch de Dependência| wouter@3.7.1.patch           | -                   |
+- Seção "Hero" com apresentação inicial e chamada para ação interativa
+- Página "Sobre Mim" detalhando trajetória profissional e skills
+- Listagem e destaque das hard skills com ícones e descrições
+- Galeria de projetos técnicos com detalhes, tecnologias empregadas e links para repositórios/exemplos
+- Múltiplos canais de contato: GitHub, LinkedIn e email diretamente acessíveis
+- Navegação suave animada entre as seções da página
+- Back-end básico para servir a aplicação e fornecer APIs necessárias
+- Gerenciamento das dependências e scripts via pnpm, garantindo builds consistentes
+- Patch aplicado ao Wouter para customizações específicas da versão utilizada
 
 ---
 
-## Estrutura de Diretórios
+## 3. Tecnologias Utilizadas
 
-```plaintext
+### Linguagens
+- TypeScript (5.6.3)
+- JavaScript (ESNext)
+- HTML5 e CSS3 (via Tailwind CSS)
+
+### Frameworks e Bibliotecas
+- React 19.2.1
+- Tailwind CSS 4.1.14
+- Vite 7.1.7 (build tool)
+- Wouter 3.3.5 (roteamento leve)
+
+### Ferramentas e Ambientes
+- Node.js (runtime do servidor)
+- pnpm (gerenciador de pacotes)
+- TypeScript Compiler (tsc)
+- Patch management com arquivos localizados em /patches
+
+### Modelos de Projeto / Arquitetura
+- Separação clara entre frontend (client/) e backend (server/)
+- Código compartilhado em shared/ para reutilização de constantes e configurações
+- Configurações específicas do projeto em tsconfig.json, tsconfig.node.json e vite.config.ts
+- Estrutura modular para facilitar manutenção e escalabilidade
+
+---
+
+## 4. Estrutura do Projeto
+
+```
 Portfolio.github.io/
-├── client/                  # Código-fonte do frontend em React
-│   ├── index.html           # Arquivo HTML principal da aplicação React
-│   ├── public/              # Recursos públicos estáticos (imagens, favicon, etc)
-│   └── src/                 # Código-fonte React com componentes, estilos e lógica UI
-├── server/                  # Backend Node.js em TypeScript para APIs e server-side
-│   └── index.ts             # Ponto de entrada do servidor
-├── shared/                  # Código e constantes compartilhadas entre frontend e backend
-│   └── const.ts             # Constantes comuns para todo o projeto
-├── patches/                 # Patches customizados para dependências node_modules
-│   └── wouter@3.7.1.patch  # Correção aplicada à biblioteca Wouter versão 3.7.1
-├── package.json             # Configurações e dependências do projeto
-├── pnpm-lock.yaml           # Lockfile para controle de versões do pnpm
-├── tsconfig.json            # Configuração principal do TypeScript para o projeto
-├── tsconfig.node.json       # Configuração TypeScript específica para o backend Node.js
-├── vite.config.ts           # Configuração do Vite para build e dev server
-├── LICENSE                  # Arquivo de licença do projeto
-├── CONTRIBUTING.md          # Guia de contribuição para desenvolvedores
-├── SETUP.md                 # Guia para instalação e configuração do ambiente local
-├── DIRECTORY_STRUCTURE.md   # Detalhamento da estrutura do projeto
-└── README.md                # Documentação principal do projeto (este arquivo)
+├── CONTRIBUTING.md                # Diretrizes para contribuição ao projeto
+├── DIRECTORY_STRUCTURE.md        # Documentação detalhada da árvore de diretórios
+├── LICENSE                      # Licença do projeto (provavelmente MIT ou similar)
+├── README.md                    # Documentação principal do repositório (este arquivo)
+├── SETUP.md                     # Guia de configuração e instalação do ambiente
+├── client/                      # Código fonte do frontend (React + Tailwind)
+│   ├── index.html               # Arquivo HTML principal para SPA
+│   ├── public/                  # Recursos públicos estáticos
+│   └── src/                     # Código-fonte React (componentes, assets, estilos)
+├── components.json              # Configuração/descrição dos componentes usados (provavelmente)
+├── package.json                 # Configurações do projeto e dependências
+├── patches/                     # Correções customizadas como patch para Wouter 3.7.1
+│   └── wouter@3.7.1.patch
+├── pnpm-lock.yaml               # Lockfile do pnpm para dependências fixas
+├── server/                     # Código fonte do backend (Node.js + TypeScript)
+│   └── index.ts                # Entry point do servidor
+├── shared/                     # Código compartilhado entre frontend e backend
+│   └── const.ts                # Constantes utilizadas em múltiplas partes do projeto
+├── tsconfig.json               # Configuração principal do TypeScript para o projeto
+├── tsconfig.node.json          # Config TR específico para código de Node.js
+└── vite.config.ts              # Configurações do bundler Vite
 ```
 
 ---
 
-## Instalação e Execução
+## 5. Instalação e Execução
 
-### Pré-requisitos
+Para executar localmente o projeto, siga os passos abaixo:
 
-- Node.js (preferencialmente versões LTS, >=18.x)
-- pnpm (gerenciador de pacotes) instalado globalmente
-- Navegador moderno para visualização do frontend (Chrome, Firefox, Edge, Safari)
+```bash
+# 1. Clonar o repositório
+git clone https://github.com/H-Saimon/Portfolio.github.io.git
 
-### Passos para rodar localmente
+# 2. Entrar na pasta do projeto
+cd Portfolio.github.io
 
-1. Clone este repositório:
+# 3. Instalar as dependências com pnpm (deve ter pnpm instalado)
+pnpm install
 
-   ```bash
-   git clone https://github.com/HitalonSaimon/Portfolio.github.io.git
-   cd Portfolio.github.io
-   ```
+# 4. Rodar o ambiente de desenvolvimento (executa frontend e backend)
+pnpm run dev
 
-2. Instale as dependências com pnpm:
+# Ou, para rodar somente o cliente frontend:
+pnpm run dev:client
 
-   ```bash
-   pnpm install
-   ```
+# Para build de produção:
+pnpm run build
 
-3. Aplique o patch na dependência Wouter (se não for aplicado automaticamente via patch-package):
+# Para iniciar o servidor de produção (após build)
+pnpm run start
+```
 
-   ```bash
-   # Instruções específicas estão no README relacionado ao patch ou script no package.json
-   ```
-
-4. Execute o servidor backend:
-
-   ```bash
-   pnpm run dev:server
-   ```
-
-5. Em outro terminal, execute o frontend:
-
-   ```bash
-   pnpm run dev:client
-   ```
-
-6. Acesse a aplicação em [http://localhost:3000](http://localhost:3000) ou conforme configurado no `vite.config.ts`.
+Recomenda-se utilizar Node.js na versão compatível com o projeto (recomenda-se >=16.x).
 
 ---
 
-## Endpoints da API
+## 6. Endpoints da API
 
-| Método | Endpoint         | Descrição                              |
-|--------|------------------|--------------------------------------|
-| GET    | `/api/projects`  | Retorna a lista de projetos em destaque |
-| GET    | `/api/contact`   | Retorna informações para contato     |
+O backend possui um servidor Node.js básico cuja única entrada principal é o arquivo `server/index.ts`.
 
-> **Observação:** Esta estrutura de endpoints é prevista conforme organização do backend `server/index.ts`. Podem existir outras rotas internas conforme evolução do código.
+| Método | Endpoint         | Descrição                                     |
+|--------|------------------|-----------------------------------------------|
+| GET    | /api/status      | Retorna o status do servidor (healthcheck)    |
+| GET    | /api/projects    | Retorna lista dos projetos exibidos no portfólio |
+| POST   | /api/contact     | Recebe dados de contato para envio ou armazenamento |
 
----
-
-## Testes
-
-- Atualmente, o projeto não possui testes automatizados implementados.
-- Futuras versões devem incluir testes unitários e de integração, utilizando frameworks como Jest e React Testing Library para frontend e backend.
-- Estratégia sugerida: cobertura modular para frontend (componentes React) e backend (endpoints e funções de negócio).
+> **Nota:** Confirme os endpoints exatos no código fonte do `server/index.ts`, pois podem existir rotas adicionais ou específicas.
 
 ---
 
-## Deploy
+## 7. Testes
 
-- O deploy pode ser realizado em qualquer plataforma de hospedagem estática para o frontend (Netlify, Vercel, GitHub Pages).
-- O backend Node.js pode ser hospedado em serviços de nuvem com suporte a Node.js (AWS Elastic Beanstalk, Heroku, DigitalOcean).
-- Recomenda-se containerização via Docker para facilitar deploys consistentes e escaláveis.
-- Pipeline CI/CD pode ser configurado utilizando GitHub Actions ou outra plataforma para automação de build e deploy.
+Atualmente, não há evidência de implementação de testes unitários ou de integração no repositório.
 
----
-
-## Segurança
-
-- Atualmente, a aplicação não possui autenticação ou autorização, pois é um portfólio público.
-- Validações básicas são implementadas para evitar entradas inválidas em formulários de contato.
-- O patch aplicado ao `wouter` garante estabilidade e evita vulnerabilidades relacionadas à navegação.
-- Em versões futuras, recomenda-se:
-  - Adicionar token anti-CSRF para endpoints /formulários.
-  - Escapar e sanitizar inputs para mitigar ataques XSS.
-  - Utilizar HTTPS no ambiente de produção.
+Recomenda-se incluir futuramente:
+- Testes unitários para componentes React usando Jest e React Testing Library
+- Testes de integração para APIs do backend com ferramentas como Supertest
+- Análise de cobertura e pipelines de CI para garantir estabilidade
 
 ---
 
-## Melhorias Futuras
+## 8. Segurança
 
-- Implementar testes automatizados para frontend e backend.
-- Adicionar suporte a múltiplos idiomas (i18n).
-- Incluir feedback visual e validação ampliada para formulário de contato.
-- Migrar backend para arquitetura serverless para redução de custo e escala.
-- Implementar analytics para medir engajamento do portfólio.
-- Atualizar e centralizar configuração de tema escuro/claro.
-- Automatizar deploy com CI/CD integrado.
-- Expandir seções do portfólio com blogs técnicos e certificações.
+- Autenticação e autorização explícitas não parecem implementadas, dado o caráter do projeto como portfólio público.
+- Validações básicas devem estar presentes para o formulário de contato (em backend e frontend).
+- Utilização do TypeScript reduz erros relacionados a tipagem.
+- Aplicação serve conteúdo estático e dados não críticos, reduzindo riscos maiores.
 
----
-
-## Contribuição
-
-Contribuições são muito bem-vindas! Para contribuir, siga os passos abaixo:
-
-1. Leia o arquivo [`CONTRIBUTING.md`](./CONTRIBUTING.md) para entender as diretrizes do projeto.
-2. Faça um fork do repositório.
-3. Crie uma branch com a sua feature ou correção:
-   ```bash
-   git checkout -b minha-feature
-   ```
-4. Realize suas alterações com commits claros e concisos.
-5. Execute testes manuais e verifique a build localmente.
-6. Faça push da branch para seu fork e abra um pull request neste repositório.
-7. Aguarde revisão e feedback da equipe.
-
-Por favor, mantenha o padrão do código, documentação atualizada e siga as boas práticas de desenvolvimento.
+Recomenda-se para futuras versões:
+- Implementar reCAPTCHA para evitar spam no formulário de contato.
+- Adicionar políticas de CORS e validação rigorosa no backend.
+- Monitorar e atualizar dependências para corrigir vulnerabilidades.
 
 ---
 
-## Licença
+## 9. Deploy
 
-Este projeto está licenciado sob a licença **MIT**. Consulte o arquivo [LICENSE](./LICENSE) para mais detalhes.
+Não há scripts explícitos para deploy no repositório, porém o processo pode ser realizado conforme os métodos abaixo:
+
+- **Hospedagem Frontend:** via GitHub Pages, Vercel, Netlify ou similar, utilizando o build gerado pelo Vite
+- **Servidor Backend:** deploy em servidores Node.js compatíveis (Heroku, AWS, DigitalOcean)
+- **Docker:** Embora não há Dockerfile, um container Node.js pode ser criado para ambiente isolado e replicável
+- **Pipeline CI/CD:** Sugere-se configurar workflows GitHub Actions para build, testes e deploy automatizado
 
 ---
 
-> Desenvolvido por **Hítalon Saimon** | Engenharia de Software & Desenvolvimento Full-Stack  
-> [GitHub](https://github.com/HitalonSaimon) | [LinkedIn](https://www.linkedin.com/in/hitalonsaimon)
+## 10. Melhorias Futuras
+
+- Implementar testes automatizados para frontend e backend, incluindo cobertura de código
+- Criar autenticação básica para área administrativa de edição do portfólio
+- Adicionar suporte a internacionalização (i18n) para apresentar o portfólio em múltiplos idiomas
+- Integrar sistema de CMS headless para facilitar atualização dos projetos e conteúdos sem alteração de código
+- Otimizar SEO e acessibilidade para melhor ranqueamento e usabilidade
+- Incorporar análise de métricas de uso (Google Analytics, etc) para dados de visitantes
+- Automatizar deploy via pipelines CI/CD com ambientes staging e produção
+- Migrar para Next.js ou framework SSR para melhor performance e SEO
+
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido por **Hítalon Saimon Santos Silva**  
+GitHub: https://github.com/H-Saimon

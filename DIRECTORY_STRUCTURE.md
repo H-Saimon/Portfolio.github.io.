@@ -85,7 +85,6 @@ client/
 │   │   │   ├── toggle.tsx
 │   │   │   └── tooltip.tsx
 │   │   ├── ErrorBoundary.tsx    # Componente de tratamento de erros
-│   │   ├── ManusDialog.tsx      # Dialog customizado
 │   │   └── Map.tsx              # Integração Google Maps
 │   ├── pages/             # Componentes de página
 │   │   ├── Home.tsx       # Página principal do portfólio
@@ -116,7 +115,6 @@ Arquivos estáticos que são copiados verbatim para a raiz do site em produção
 Componentes React reutilizáveis:
 - **ui/**: Componentes shadcn/ui - componentes de UI acessíveis e customizáveis
 - **ErrorBoundary.tsx**: Captura erros em componentes filhos
-- **ManusDialog.tsx**: Dialog customizado para a plataforma Manus
 - **Map.tsx**: Integração com Google Maps
 
 #### `client/src/pages/`
@@ -258,7 +256,6 @@ pages/Home.tsx (main page)
 components/ (reusable components)
     ├── ui/ (shadcn/ui components)
     ├── ErrorBoundary.tsx
-    ├── ManusDialog.tsx
     └── Map.tsx
     ↓
 contexts/ (global state)

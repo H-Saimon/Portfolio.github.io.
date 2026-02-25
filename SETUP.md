@@ -56,7 +56,6 @@ hitalon-portfolio/
 │   │   ├── components/      # Componentes React reutilizáveis
 │   │   │   ├── ui/         # Componentes shadcn/ui
 │   │   │   ├── ErrorBoundary.tsx
-│   │   │   ├── ManusDialog.tsx
 │   │   │   └── Map.tsx
 │   │   ├── pages/          # Páginas da aplicação
 │   │   │   ├── Home.tsx    # Página principal do portfólio
@@ -321,7 +320,6 @@ pnpm remove nome-do-pacote
 - **Vercel** - Otimizado para Vite
 - **Netlify** - Suporte completo a SPA
 - **GitHub Pages** - Gratuito para repositórios públicos
-- **Manus** - Hosting integrado com suporte a custom domains
 
 ## 📚 Recursos Úteis
 

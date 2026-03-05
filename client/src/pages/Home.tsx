@@ -1,526 +1,441 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Cloud,
+  Database,
+  Download,
+  ExternalLink,
+  Github,
+  Globe,
+  Linkedin,
+  Mail,
+  Moon,
+  Server,
+  Sun,
+  TerminalSquare,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Github, Linkedin, Mail, FileText, ExternalLink, Code2 } from "lucide-react";
-import { useRef } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
+
+type Locale = "pt" | "en";
+
+type GithubRepo = {
+  id: number;
+  name: string;
+  description: string | null;
+  stargazers_count: number;
+  language: string | null;
+  html_url: string;
+  homepage: string | null;
+  topics: string[];
+  fork: boolean;
+  archived: boolean;
+  has_pages: boolean;
+  updated_at: string;
+};
+
+const PROFILE = {
+  name: "Hítalon Saimon",
+  title: "Software Engineer in Progress",
+  github: "https://github.com/H-Saimon",
+  linkedin: "https://www.linkedin.com/in/hítalon-saimon-5aa8b9311/",
+  email: "hitalonsaimon.dev@gmail.com",
+};
+
+const i18n = {
+  pt: {
+    nav: ["Sobre", "Habilidades", "Projetos", "Contato"],
+    heroBadge: "Portfólio Profissional",
+    impact:
+      "Transformando experiência humana em arquiteturas de software eficientes.",
+    heroCtaProjects: "Ver Projetos",
+    heroCtaCv: "Download CV",
+    heroCtaContact: "Contato",
+    aboutTitle: "Sobre Mim",
+    aboutText:
+      "Sou um profissional em transição de Instrutor de Sistemas para Desenvolvedor, combinando visão técnica e de negócio para criar produtos úteis, claros e escaláveis. Minha base em suporte técnico, treinamento e atendimento ao cliente fortaleceu minha comunicação e minha capacidade de resolver problemas reais com foco em impacto.",
+    skillsTitle: "Habilidades",
+    skillsSubtitle:
+      "Stack organizada para atuar em times de produto, dados e desenvolvimento full stack.",
+    projectsTitle: "Projetos Selecionados",
+    projectsSubtitle:
+      "Seleção automática baseada em estrelas, organização técnica, completude e relevância de mercado no GitHub.",
+    projectsLoading: "Analisando repositórios do GitHub...",
+    projectsError:
+      "Não foi possível carregar os projetos agora. Verifique sua conexão e tente novamente.",
+    repo: "Repositório",
+    deploy: "Deploy",
+    noDeploy: "Sem deploy público",
+    timelineTitle: "Experiência & Educação",
+    timeline: [
+      {
+        title: "Técnico em Desenvolvimento de Sistemas",
+        desc: "Formação concluída com foco prático em lógica, banco de dados e desenvolvimento orientado a soluções.",
+      },
+      {
+        title: "Engenharia de Software (em andamento)",
+        desc: "Aprofundamento em arquitetura, qualidade de software e desenvolvimento profissional.",
+      },
+      {
+        title: "Suporte Técnico, Treinamento e Atendimento",
+        desc: "Experiência sólida com usuários reais, comunicação interpessoal e resolução ágil de incidentes.",
+      },
+    ],
+    footerCta: "Vamos construir algo juntos?",
+  },
+  en: {
+    nav: ["About", "Skills", "Projects", "Contact"],
+    heroBadge: "Professional Portfolio",
+    impact:
+      "Turning human experience into efficient software architectures.",
+    heroCtaProjects: "View Projects",
+    heroCtaCv: "Download CV",
+    heroCtaContact: "Contact",
+    aboutTitle: "About Me",
+    aboutText:
+      "I am transitioning from Systems Instructor to Developer, combining technical and business vision to build useful, clear, and scalable products. My background in technical support, systems training, and customer service strengthened my communication and my ability to solve real-world problems with impact.",
+    skillsTitle: "Skills",
+    skillsSubtitle:
+      "A stack organized to contribute in product, data, and full-stack teams.",
+    projectsTitle: "Selected Projects",
+    projectsSubtitle:
+      "Automatic selection based on stars, code organization, project completeness, and market relevance from GitHub.",
+    projectsLoading: "Analyzing GitHub repositories...",
+    projectsError:
+      "Could not load projects right now. Please check your connection and try again.",
+    repo: "Repository",
+    deploy: "Deploy",
+    noDeploy: "No public deploy",
+    timelineTitle: "Experience & Education",
+    timeline: [
+      {
+        title: "Systems Development Technician",
+        desc: "Completed technical program focused on practical coding, databases, and solution-driven development.",
+      },
+      {
+        title: "Software Engineering (ongoing)",
+        desc: "Deepening knowledge in architecture, software quality, and professional development practices.",
+      },
+      {
+        title: "Technical Support, Training & Customer Success",
+        desc: "Strong experience with real users, interpersonal communication, and agile issue resolution.",
+      },
+    ],
+    footerCta: "Shall we build something together?",
+  },
+};
+
+const skillGroups = [
+  {
+    title: "Backend",
+    icon: Server,
+    items: ["Java", "Python", "C#", "PHP", "REST APIs"],
+  },
+  {
+    title: "Frontend",
+    icon: TerminalSquare,
+    items: ["JavaScript", "React", "Angular", "Tailwind CSS", "HTML/CSS"],
+  },
+  {
+    title: "Banco de Dados",
+    icon: Database,
+    items: ["SQL", "MySQL", "PostgreSQL", "Modelagem", "Consultas"],
+  },
+  {
+    title: "Cloud & Data",
+    icon: Cloud,
+    items: ["AWS", "Power BI", "Excel", "Dashboards", "Análise"],
+  },
+];
 
 export default function Home() {
-  const aboutRef = useRef<HTMLDivElement>(null);
-  const skillsRef = useRef<HTMLDivElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
-  const contactRef = useRef<HTMLDivElement>(null);
+  const { theme, toggleTheme } = useTheme();
+  const [locale, setLocale] = useState<Locale>(
+    () => (localStorage.getItem("locale") as Locale) || "pt",
+  );
+  const [projects, setProjects] = useState<GithubRepo[]>([]);
+  const [loadingProjects, setLoadingProjects] = useState(true);
+  const [projectError, setProjectError] = useState(false);
 
-  const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
+  const aboutRef = useRef<HTMLElement>(null);
+  const skillsRef = useRef<HTMLElement>(null);
+  const projectsRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
+
+  const t = i18n[locale];
+
+  useEffect(() => {
+    localStorage.setItem("locale", locale);
+    document.documentElement.lang = locale === "pt" ? "pt-BR" : "en";
+  }, [locale]);
+
+  useEffect(() => {
+    const fetchRepos = async () => {
+      try {
+        const response = await fetch(
+          "https://api.github.com/users/H-Saimon/repos?per_page=100&sort=updated",
+        );
+        if (!response.ok) throw new Error("GitHub API error");
+
+        const data = (await response.json()) as GithubRepo[];
+
+        const selected = data
+          .filter((repo) => !repo.fork && !repo.archived)
+          .sort((a, b) => scoreRepo(b) - scoreRepo(a))
+          .slice(0, 6);
+
+        setProjects(selected);
+        setProjectError(false);
+      } catch {
+        setProjectError(true);
+      } finally {
+        setLoadingProjects(false);
+      }
+    };
+
+    void fetchRepos();
+  }, []);
+
+  const scrollTo = (target: React.RefObject<HTMLElement | null>) => {
+    target.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const skills = {
-    languages: ["Java", "Python", "C#", "PHP", "JavaScript"],
-    web: ["HTML5", "CSS3", "React", "Angular", "Tailwind CSS"],
-    data: ["MySQL", "PostgreSQL", "SQL Server", "Power BI"],
-    tools: ["Git", "GitHub", "Arduino", "ESP32", "Nuvem", "Protocolos IoT"],
-  };
+  const contactLink = `mailto:${PROFILE.email}`;
 
-  const projects = [
-    {
-      title: "Sistema de Gerenciamento IoT",
-      description:
-        "Plataforma completa para monitoramento e controle de dispositivos IoT. Desenvolvida com Arduino/ESP32 e backend em Python, permitindo coleta de dados em tempo real e automação de processos.",
-      tags: ["Arduino", "ESP32", "Python", "MySQL", "REST API"],
-      github: "#",
-      demo: "#",
-    },
-    {
-      title: "Dashboard de Análise de Dados",
-      description:
-        "Dashboard interativo desenvolvido em React com integração a Power BI. Apresenta métricas em tempo real, gráficos dinâmicos e exportação de relatórios em múltiplos formatos.",
-      tags: ["React", "Power BI", "PostgreSQL", "Tailwind CSS"],
-      github: "#",
-      demo: "#",
-    },
-    {
-      title: "API RESTful de Gestão de Usuários",
-      description:
-        "Backend robusto desenvolvido em Java com Spring Boot. Implementa autenticação JWT, validação de dados, tratamento de erros e documentação Swagger completa.",
-      tags: ["Java", "Spring Boot", "PostgreSQL", "JWT", "Docker"],
-      github: "#",
-      demo: "#",
-    },
-    {
-      title: "Aplicação Web de E-commerce",
-      description:
-        "Plataforma de e-commerce full-stack com frontend em Angular e backend em C#. Inclui carrinho de compras, integração de pagamento e painel administrativo.",
-      tags: ["Angular", "C#", ".NET", "SQL Server", "Stripe"],
-      github: "#",
-      demo: "#",
-    },
+  const navActions = [
+    () => scrollTo(aboutRef),
+    () => scrollTo(skillsRef),
+    () => scrollTo(projectsRef),
+    () => scrollTo(contactRef),
   ];
 
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+    <main className="bg-[#F9FAFB] text-[#111827] transition-colors duration-300 dark:bg-[#0F172A] dark:text-[#F8FAFC]">
+      <header className="sticky top-0 z-50 border-b border-[#E5E7EB]/90 bg-white/70 backdrop-blur-xl dark:border-[#334155] dark:bg-[#1E293B]/70">
+        <div className="container flex h-18 items-center justify-between py-4">
+          <div>
+            <p className="text-sm text-[#6B7280] dark:text-[#94A3B8]">{PROFILE.name}</p>
+            <p className="font-semibold">{PROFILE.title}</p>
+          </div>
+
+          <nav className="hidden items-center gap-6 md:flex">
+            {t.nav.map((item, index) => (
+              <button
+                key={item}
+                onClick={navActions[index]}
+                className="text-sm text-[#6B7280] transition hover:text-[#2563EB] dark:text-[#94A3B8] dark:hover:text-[#3B82F6]"
+              >
+                {item}
+              </button>
+            ))}
+          </nav>
+
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-cyan-500 rounded flex items-center justify-center font-bold text-slate-950">
-              HS
-            </div>
-            <span className="text-sm text-slate-400">Software Engineer</span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-8">
-            <button
-              onClick={() => scrollToSection(aboutRef)}
-              className="text-sm text-slate-300 hover:text-cyan-400 transition-colors flex items-center gap-2"
-            >
-              <span className="text-cyan-500">→</span>Sobre
-            </button>
-            <button
-              onClick={() => scrollToSection(skillsRef)}
-              className="text-sm text-slate-300 hover:text-cyan-400 transition-colors flex items-center gap-2"
-            >
-              <span className="text-cyan-500">◆</span>Skills
-            </button>
-            <button
-              onClick={() => scrollToSection(projectsRef)}
-              className="text-sm text-slate-300 hover:text-cyan-400 transition-colors flex items-center gap-2"
-            >
-              <span className="text-cyan-500">⬢</span>Projetos
-            </button>
-            <button
-              onClick={() => scrollToSection(contactRef)}
-              className="text-sm text-slate-300 hover:text-cyan-400 transition-colors flex items-center gap-2"
-            >
-              <span className="text-cyan-500">✉</span>Contato
-            </button>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-slate-400 hover:text-cyan-400 transition-colors"
-            >
-              <Github size={20} />
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-slate-400 hover:text-cyan-400 transition-colors"
-            >
-              <Linkedin size={20} />
-            </a>
             <Button
               variant="outline"
               size="sm"
-              className="text-xs border-slate-700 text-slate-300 hover:text-cyan-400 hover:border-cyan-500"
+              onClick={() => setLocale((prev) => (prev === "pt" ? "en" : "pt"))}
+              className="border-[#E5E7EB] bg-white/70 text-xs hover:bg-[#F3F4F6] dark:border-[#334155] dark:bg-[#1E293B]"
             >
-              <FileText size={16} className="mr-1" />
-              Currículo
+              <Globe className="mr-1 h-4 w-4" />
+              {locale.toUpperCase()}
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={toggleTheme}
+              className="border-[#E5E7EB] bg-white/70 hover:bg-[#F3F4F6] dark:border-[#334155] dark:bg-[#1E293B]"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
           </div>
         </div>
-      </nav>
+      </header>
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center pt-20 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-500/10 pointer-events-none" />
+      <section className="container py-24">
+        <div className="rounded-3xl border border-[#E5E7EB] bg-white/70 p-10 shadow-sm backdrop-blur-xl dark:border-[#334155] dark:bg-[#1E293B]/60 md:p-16">
+          <p className="mb-5 text-sm tracking-[0.2em] text-[#2563EB] dark:text-[#3B82F6]">{t.heroBadge}</p>
+          <h1 className="text-4xl font-bold md:text-6xl">{PROFILE.name}</h1>
+          <h2 className="mt-4 text-xl text-[#6B7280] dark:text-[#94A3B8]">{PROFILE.title}</h2>
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed">{t.impact}</p>
 
-        <div className="container mx-auto max-w-4xl relative z-10">
-          <div className="text-center space-y-8 animate-in fade-in duration-1000">
-            <div className="inline-block">
-              <span className="text-cyan-400 text-sm font-mono tracking-widest">
-                ◆ BEM-VINDO AO MEU PORTFÓLIO
-              </span>
-            </div>
-
-            <h1 className="text-6xl md:text-7xl font-bold tracking-tight">
-              Hítalon Saimon
-            </h1>
-
-            <h2 className="text-2xl md:text-3xl text-cyan-400 font-light">
-              Engenharia de Software & Soluções Tech
-            </h2>
-
-            <p className="text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              De Instrutor de Sistemas a Desenvolvedor. Unindo a experiência em
-              suporte técnico e atendimento com a paixão por criar código
-              eficiente e escalável.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-              <Button
-                onClick={() => scrollToSection(projectsRef)}
-                className="bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-semibold px-8"
-              >
-                Ver Projetos
-              </Button>
-              <Button
-                variant="outline"
-                className="border-slate-700 text-slate-300 hover:text-cyan-400 hover:border-cyan-500"
-              >
-                <Github size={18} className="mr-2" />
-                GitHub
-              </Button>
-              <Button
-                variant="outline"
-                className="border-slate-700 text-slate-300 hover:text-cyan-400 hover:border-cyan-500"
-              >
-                <Linkedin size={18} className="mr-2" />
-                LinkedIn
-              </Button>
-              <Button
-                variant="outline"
-                className="border-slate-700 text-slate-300 hover:text-cyan-400 hover:border-cyan-500"
-              >
-                <FileText size={18} className="mr-2" />
-                Baixar Currículo
-              </Button>
-            </div>
-
-            <div className="pt-12">
-              <div className="text-slate-400 text-sm animate-bounce">
-                ↓ SCROLL PARA EXPLORAR
-              </div>
-            </div>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Button onClick={() => scrollTo(projectsRef)} className="bg-[#2563EB] text-white hover:bg-[#1D4ED8] dark:bg-[#3B82F6]">
+              {t.heroCtaProjects}
+            </Button>
+            <Button asChild variant="outline" className="border-[#E5E7EB] dark:border-[#334155]">
+              <a href={PROFILE.github} target="_blank" rel="noopener noreferrer">
+                <Download className="mr-2 h-4 w-4" />
+                {t.heroCtaCv}
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="border-[#E5E7EB] dark:border-[#334155]">
+              <a href={contactLink}>
+                <Mail className="mr-2 h-4 w-4" />
+                {t.heroCtaContact}
+              </a>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section
-        ref={aboutRef}
-        className="py-20 px-4 border-t border-slate-800 relative"
-      >
-        <div className="container mx-auto max-w-4xl">
-          <div className="space-y-12">
-            <div>
-              <h2 className="text-4xl font-bold mb-2">
-                <span className="text-cyan-500">◆</span> Sobre Mim
-              </h2>
-            </div>
+      <section ref={aboutRef} className="container py-12">
+        <h3 className="text-3xl font-semibold">{t.aboutTitle}</h3>
+        <p className="mt-6 max-w-4xl text-lg leading-relaxed text-[#374151] dark:text-[#CBD5E1]">{t.aboutText}</p>
+      </section>
 
-            <p className="text-lg text-slate-300 leading-relaxed">
-              Sou um engenheiro de software apaixonado por criar soluções
-              técnicas eficientes e escaláveis. Minha jornada começou como
-              instrutor de sistemas no SENAI, onde desenvolvi habilidades
-              sólidas em suporte técnico e comunicação clara.
-            </p>
+      <section ref={skillsRef} className="container py-12">
+        <h3 className="text-3xl font-semibold">{t.skillsTitle}</h3>
+        <p className="mt-3 text-[#6B7280] dark:text-[#94A3B8]">{t.skillsSubtitle}</p>
 
-            <p className="text-lg text-slate-300 leading-relaxed">
-              Atualmente, estou cursando Engenharia de Software na UniAmérica,
-              aprofundando meus conhecimentos em desenvolvimento de software,
-              arquitetura de sistemas e boas práticas de engenharia.
-            </p>
-
-            <p className="text-lg text-slate-300 leading-relaxed">
-              Na Tel Telemática, como Instrutor e Operador de Suporte Alto
-              Valor, consolidei a empatia com o usuário final e a capacidade de
-              resolver problemas técnicos complexos de forma ágil e eficiente.
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-8 pt-8">
-              <Card className="bg-slate-800/50 border-slate-700 p-6">
-                <h3 className="text-cyan-400 font-semibold mb-2">FORMAÇÃO</h3>
-                <p className="text-slate-300 font-medium">
-                  Engenharia de Software
-                </p>
-                <p className="text-slate-500 text-sm">UniAmérica</p>
+        <div className="mt-8 grid gap-4 md:grid-cols-6">
+          {skillGroups.map((group, idx) => {
+            const Icon = group.icon;
+            return (
+              <Card
+                key={group.title}
+                className={`border-[#E5E7EB] bg-white/80 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-[#334155] dark:bg-[#1E293B]/70 ${idx === 0 ? "md:col-span-3" : ""} ${idx === 1 ? "md:col-span-3" : ""} ${idx === 2 ? "md:col-span-2" : ""} ${idx === 3 ? "md:col-span-4" : ""}`}
+              >
+                <div className="mb-3 flex items-center gap-3">
+                  <Icon className="h-5 w-5 text-[#06B6D4] dark:text-[#22D3EE]" />
+                  <h4 className="font-semibold">{group.title}</h4>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-[#E5E7EB] px-3 py-1 text-xs text-[#374151] dark:border-[#334155] dark:text-[#CBD5E1]"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
               </Card>
-
-              <Card className="bg-slate-800/50 border-slate-700 p-6">
-                <h3 className="text-cyan-400 font-semibold mb-2">EXPERIÊNCIA</h3>
-                <p className="text-slate-300 font-medium">
-                  Instrutor & Suporte Alto Valor
-                </p>
-                <p className="text-slate-500 text-sm">Tel Telemática</p>
-              </Card>
-
-              <Card className="bg-slate-800/50 border-slate-700 p-6">
-                <h3 className="text-cyan-400 font-semibold mb-2">ESPECIALIDADE</h3>
-                <p className="text-slate-300 font-medium">
-                  Resolução Ágil de Problemas
-                </p>
-                <p className="text-slate-500 text-sm">
-                  Comunicação Técnica Clara
-                </p>
-              </Card>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8 pt-8">
-              <Card className="bg-slate-800/50 border-slate-700 p-6">
-                <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                  <span className="text-cyan-500">●</span> EMPATIA COM USUÁRIO
-                </h3>
-                <p className="text-slate-300 text-sm leading-relaxed">
-                  Desenvolvida através de anos como Instrutor de Sistemas e
-                  Operador de Suporte Alto Valor na Tel Telemática. Entendo as
-                  necessidades reais do usuário final.
-                </p>
-              </Card>
-
-              <Card className="bg-slate-800/50 border-slate-700 p-6">
-                <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                  <span className="text-cyan-500">●</span> COMUNICAÇÃO TÉCNICA
-                </h3>
-                <p className="text-slate-300 text-sm leading-relaxed">
-                  Capacidade de explicar conceitos técnicos complexos de forma
-                  clara e acessível, facilitando a colaboração entre equipes e
-                  stakeholders.
-                </p>
-              </Card>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section
-        ref={skillsRef}
-        className="py-20 px-4 border-t border-slate-800 bg-slate-800/30"
-      >
-        <div className="container mx-auto max-w-4xl">
-          <div className="space-y-12">
-            <div>
-              <h2 className="text-4xl font-bold mb-2">
-                <span className="text-cyan-500">◆</span> Hard Skills
-              </h2>
-              <p className="text-slate-400">
-                Tecnologias e ferramentas que utilizo para criar soluções
-                eficientes e escaláveis.
-              </p>
-            </div>
+      <section ref={projectsRef} className="container py-12">
+        <h3 className="text-3xl font-semibold">{t.projectsTitle}</h3>
+        <p className="mt-3 text-[#6B7280] dark:text-[#94A3B8]">{t.projectsSubtitle}</p>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-cyan-400 font-semibold mb-4 flex items-center gap-2">
-                  <span>◇</span> Linguagens
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {skills.languages.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-4 py-2 bg-slate-700/50 border border-slate-600 rounded-full text-sm text-slate-200 hover:border-cyan-500 hover:text-cyan-400 transition-colors"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
+        {loadingProjects && <p className="mt-8 text-sm text-[#6B7280] dark:text-[#94A3B8]">{t.projectsLoading}</p>}
+        {projectError && <p className="mt-8 text-sm text-red-500">{t.projectsError}</p>}
 
-              <div>
-                <h3 className="text-cyan-400 font-semibold mb-4 flex items-center gap-2">
-                  <span>◈</span> Web
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {skills.web.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-4 py-2 bg-slate-700/50 border border-slate-600 rounded-full text-sm text-slate-200 hover:border-cyan-500 hover:text-cyan-400 transition-colors"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-cyan-400 font-semibold mb-4 flex items-center gap-2">
-                  <span>◆</span> Dados
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {skills.data.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-4 py-2 bg-slate-700/50 border border-slate-600 rounded-full text-sm text-slate-200 hover:border-cyan-500 hover:text-cyan-400 transition-colors"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-cyan-400 font-semibold mb-4 flex items-center gap-2">
-                  <span>⬢</span> Ferramentas & Infra
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {skills.tools.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-4 py-2 bg-slate-700/50 border border-slate-600 rounded-full text-sm text-slate-200 hover:border-cyan-500 hover:text-cyan-400 transition-colors"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section
-        ref={projectsRef}
-        className="py-20 px-4 border-t border-slate-800"
-      >
-        <div className="container mx-auto max-w-4xl">
-          <div className="space-y-12">
-            <div>
-              <h2 className="text-4xl font-bold mb-2">
-                <span className="text-cyan-500">◆</span> Projetos em Destaque
-              </h2>
-              <p className="text-slate-400">
-                Seleção de projetos que demonstram minha capacidade técnica e
-                experiência em diferentes áreas da engenharia de software.
-              </p>
-            </div>
-
-            <div className="grid gap-8">
-              {projects.map((project, index) => (
-                <Card
-                  key={index}
-                  className="bg-slate-800/50 border-slate-700 p-8 hover:border-cyan-500 transition-colors group"
-                >
-                  <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-cyan-400 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-slate-300 mb-6 leading-relaxed">
-                    {project.description}
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
+          {projects.map((project) => {
+            const deployUrl = resolveDeployUrl(project);
+            return (
+              <Card
+                key={project.id}
+                className="flex h-full flex-col justify-between rounded-2xl border-[#E5E7EB] bg-white/80 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-[#334155] dark:bg-[#1E293B]/70"
+              >
+                <div>
+                  <h4 className="text-xl font-semibold">{project.name}</h4>
+                  <p className="mt-3 text-sm leading-relaxed text-[#4B5563] dark:text-[#CBD5E1]">
+                    {project.description || "Projeto com foco em aprendizado aplicado e qualidade de implementação."}
                   </p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 bg-slate-700/50 border border-slate-600 rounded text-xs text-slate-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {[project.language, ...project.topics.slice(0, 4)]
+                      .filter(Boolean)
+                      .map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-[#EFF6FF] px-2.5 py-1 text-xs text-[#1D4ED8] dark:bg-[#0F172A] dark:text-[#93C5FD]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                   </div>
-                  <div className="flex gap-4">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-slate-600 text-slate-300 hover:text-cyan-400 hover:border-cyan-500"
-                    >
-                      <Code2 size={16} className="mr-2" />
-                      Ver no GitHub
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-slate-600 text-slate-300 hover:text-cyan-400 hover:border-cyan-500"
-                    >
-                      <ExternalLink size={16} className="mr-2" />
-                      Visitar projeto
-                    </Button>
-                  </div>
-                </Card>
-              ))}
-            </div>
+                </div>
 
-            <div className="text-center pt-8">
-              <p className="text-slate-400 mb-4">
-                Quer ver mais projetos? Confira meu perfil no GitHub para
-                acessar meu portfólio completo.
-              </p>
-              <Button className="bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-semibold">
-                Ver Todos os Projetos
-              </Button>
-            </div>
-          </div>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Button asChild variant="outline" size="sm" className="border-[#E5E7EB] dark:border-[#334155]">
+                    <a href={project.html_url} target="_blank" rel="noopener noreferrer">
+                      <Github className="mr-2 h-4 w-4" />
+                      {t.repo}
+                    </a>
+                  </Button>
+
+                  {deployUrl ? (
+                    <Button asChild size="sm" className="bg-[#6366F1] text-white hover:bg-[#4F46E5] dark:bg-[#818CF8] dark:text-[#0F172A]">
+                      <a href={deployUrl} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        {t.deploy}
+                      </a>
+                    </Button>
+                  ) : (
+                    <span className="text-xs text-[#9CA3AF]">{t.noDeploy}</span>
+                  )}
+                </div>
+              </Card>
+            );
+          })}
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section
-        ref={contactRef}
-        className="py-20 px-4 border-t border-slate-800 bg-slate-800/30"
-      >
-        <div className="container mx-auto max-w-4xl">
-          <div className="space-y-12">
-            <div>
-              <h2 className="text-4xl font-bold mb-2">
-                <span className="text-cyan-500">◆</span> Vamos Conversar?
-              </h2>
-              <p className="text-slate-400">
-                Estou sempre aberto a novas oportunidades, colaborações e
-                conversas sobre tecnologia. Sinta-se livre para entrar em
-                contato comigo.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              <Card className="bg-slate-800/50 border-slate-700 p-8 hover:border-cyan-500 transition-colors group cursor-pointer">
-                <Github className="w-12 h-12 text-cyan-500 mb-4 group-hover:scale-110 transition-transform" />
-                <h3 className="text-xl font-semibold mb-2">GitHub</h3>
-                <p className="text-slate-400 text-sm mb-4">
-                  Confira meus projetos e contribuições open source
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-slate-600 text-slate-300 hover:text-cyan-400 hover:border-cyan-500"
-                >
-                  Ver Perfil
-                </Button>
-              </Card>
-
-              <Card className="bg-slate-800/50 border-slate-700 p-8 hover:border-cyan-500 transition-colors group cursor-pointer">
-                <Linkedin className="w-12 h-12 text-cyan-500 mb-4 group-hover:scale-110 transition-transform" />
-                <h3 className="text-xl font-semibold mb-2">LinkedIn</h3>
-                <p className="text-slate-400 text-sm mb-4">
-                  Conecte-se comigo e acompanhe minha trajetória profissional
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-slate-600 text-slate-300 hover:text-cyan-400 hover:border-cyan-500"
-                >
-                  Conectar
-                </Button>
-              </Card>
-
-              <Card className="bg-slate-800/50 border-slate-700 p-8 hover:border-cyan-500 transition-colors group cursor-pointer">
-                <Mail className="w-12 h-12 text-cyan-500 mb-4 group-hover:scale-110 transition-transform" />
-                <h3 className="text-xl font-semibold mb-2">Email</h3>
-                <p className="text-slate-400 text-sm mb-4">
-                  Envie-me uma mensagem diretamente
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-slate-600 text-slate-300 hover:text-cyan-400 hover:border-cyan-500"
-                >
-                  Enviar Email
-                </Button>
-              </Card>
-            </div>
-
-            <div className="text-center pt-8">
-              <Button className="bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-semibold px-8">
-                <FileText size={18} className="mr-2" />
-                Baixar Currículo em PDF
-              </Button>
-            </div>
-          </div>
+      <section className="container py-12">
+        <h3 className="text-3xl font-semibold">{t.timelineTitle}</h3>
+        <div className="mt-8 space-y-6 border-l-2 border-[#E5E7EB] pl-6 dark:border-[#334155]">
+          {t.timeline.map((item) => (
+            <article key={item.title} className="relative">
+              <span className="absolute -left-[31px] top-1 h-3 w-3 rounded-full bg-[#2563EB] dark:bg-[#3B82F6]" />
+              <h4 className="font-semibold">{item.title}</h4>
+              <p className="mt-1 text-sm text-[#4B5563] dark:text-[#CBD5E1]">{item.desc}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800 py-8 px-4 bg-slate-950">
-        <div className="container mx-auto text-center space-y-2">
-          <p className="text-slate-500 text-sm">
-            © 2024 Hítalon Saimon. Desenvolvido exclusivamente por Hítalon Saimon.
-          </p>
-          <p className="text-slate-600 text-xs">
-            Desenvolvido com React & Tailwind CSS | GitHub: @H-Saimon
-          </p>
+      <footer ref={contactRef} className="mt-12 border-t border-[#E5E7EB] py-12 dark:border-[#334155]">
+        <div className="container">
+          <h3 className="text-2xl font-semibold">{t.footerCta}</h3>
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+            <Button asChild variant="outline" className="border-[#E5E7EB] dark:border-[#334155]">
+              <a href={PROFILE.github} target="_blank" rel="noopener noreferrer">
+                <Github className="mr-2 h-4 w-4" /> GitHub
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="border-[#E5E7EB] dark:border-[#334155]">
+              <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer">
+                <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="border-[#E5E7EB] dark:border-[#334155]">
+              <a href={contactLink}>
+                <Mail className="mr-2 h-4 w-4" /> {PROFILE.email}
+              </a>
+            </Button>
+          </div>
+          <p className="mt-8 text-sm text-[#6B7280] dark:text-[#94A3B8]">© {currentYear} {PROFILE.name}</p>
         </div>
       </footer>
-    </div>
+    </main>
   );
+}
+
+function scoreRepo(repo: GithubRepo) {
+  const stars = repo.stargazers_count * 8;
+  const description = repo.description ? 5 : 0;
+  const topics = Math.min(repo.topics.length, 5) * 2;
+  const homepage = repo.homepage ? 4 : 0;
+  const pages = repo.has_pages ? 3 : 0;
+  const marketLanguages = ["TypeScript", "JavaScript", "Java", "Python", "C#", "PHP"].includes(
+    repo.language || "",
+  )
+    ? 4
+    : 0;
+  const recency = Math.max(0, 5 - Math.floor((Date.now() - new Date(repo.updated_at).getTime()) / (1000 * 60 * 60 * 24 * 120)));
+
+  return stars + description + topics + homepage + pages + marketLanguages + recency;
+}
+
+function resolveDeployUrl(repo: GithubRepo) {
+  if (repo.homepage && repo.homepage.startsWith("http")) return repo.homepage;
+  if (repo.has_pages) return `https://h-saimon.github.io/${repo.name}/`;
+  return null;
 }
